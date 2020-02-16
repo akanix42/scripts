@@ -1,0 +1,5 @@
+My VS code settings
+
+Disable minimap:
+"editor.minimap.enabled": false, 
+https://user-images.githubusercontent.com/6127207/26969438-b22587e8-4d40-11e7-81fb-c3112ff60881.png

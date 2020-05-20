@@ -1,0 +1,49 @@
+#!/bin/bash
+set -e
+
+function log() {
+  echo "$@" >"${STDERR:-/dev/fd/2}"
+}
+
+function main() {
+  local should_print_help
+
+  if (( $# == 0 )); then
+    should_print_help=1
+  else
+    parse_arguments "$@"
+  fi
+
+  if (( should_print_help == 1 )); then
+    print_help
+  fi
+}
+
+function checkout() {
+  (git checkout "$@" || git checkout -b  "$@") 2>/dev/null
+}
+
+function parse_arguments() {
+  local current_argument
+  while (( $# > 0 )); do
+    current_argument="$1"
+    shift
+    case "${current_argument}" in
+      checkout)
+        checkout "$@"
+        break
+        ;;
+      help) should_print_help=1 ;;
+      *)
+        log "Unrecognized parameter: ${current_argument}"
+        should_print_help=1
+        break ;;
+    esac
+  done
+}
+
+function print_help() {
+  log 'You need help.'
+}
+
+main "$@"

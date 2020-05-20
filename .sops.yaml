@@ -1,0 +1,3 @@
+creation_rules:
+  - path_regex: .*
+    pgp: '48B01152D48500660E7BF813D4962CA96B486FAE'

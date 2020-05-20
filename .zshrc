@@ -1,5 +1,7 @@
-export PATH=$HOME/personal/scripts:$PATH
+#!/bin/zsh
+MY_SCRIPTS_DIR="$(realpath "$(dirname "$0")")"
+export PATH="${MY_SCRIPTS_DIR}/bin:${MY_SCRIPTS_DIR}:${PATH}"
 
-function kc() { 
-  eval $(switch-kubeconfig $1) 
-}
+for script in "${MY_SCRIPTS_DIR}"/*.zsh; do
+  source "${script}"
+done

@@ -5,6 +5,7 @@ alias kshell='kubectl run --generator=run-pod/v1 areid-shell --rm -i --tty --ima
 alias rm="safe_rm"
 alias tf="terraform"
 alias tg="terragrunt"
+alias tsc='npx tsc'
 alias yrm="safe_rm"
 compdef safe_rm=rm
 
@@ -18,7 +19,20 @@ function -dedupe_PATH() {
 }
 
 function -.() {
-  source "${MY_SCRIPTS_DIR}"/.zshrc
+  local script_name
+  if [[ $# == 0 ]]; then
+    set -- .zshrc
+  fi
+  while (( $# > 0 )); do
+    script_name="$1"
+    if [[ "${script_name}" != '.zshrc' && "${script_name}" != *.zsh ]]; then
+      script_name+='.zsh'
+    fi
+
+    echo "... reloading ${script_name}"
+    source "${MY_SCRIPTS_DIR}"/"${script_name}"
+    shift
+  done
 }
 
 safe_rm() {

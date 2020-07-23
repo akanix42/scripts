@@ -46,5 +46,9 @@ function kpods() {
 }
 
 function kx() {
-  k exec -it $1 -- ${2:-/bin/bash}
+  if (( $# == 1 )); then
+    set "$@" /bin/bash
+  fi
+  set -x
+  k exec -it $1 -- "$@[2,-1]"
 }
